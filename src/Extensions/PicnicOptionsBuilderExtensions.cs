@@ -14,15 +14,21 @@ using Picnic.Stores.Json;
 
 namespace Picnic.SimpleAuth.Extensions
 {
-    public static class ServiceCollectionExtensions
+    public static class PicnicOptionsBuilderExtensions
     {
+        /// <summary>
+        /// Specifies that Picnic Simple Auth will be used with Picnic
+        /// </summary>
+        /// <param name="picnicOptionsBuilder">PicnicOptionsBuilder</param>
+        /// <param name="options">Cookie authentication options</param>
+        /// <returns>PicnicOptionsBuilder with specified options</returns>
         public static PicnicOptionsBuilder UseSimpleAuth(this PicnicOptionsBuilder picnicOptionsBuilder, Action<CookieAuthenticationOptions> options = null)
         {
             picnicOptionsBuilder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options ?? (opts =>
                 {
                     opts.Cookie.Name = "picnic-auth";
-                    opts.LoginPath = "/cms/login";
+                    opts.LoginPath = "/picnic/login";
                 }));
 
             // Setup Authorization for Picnic

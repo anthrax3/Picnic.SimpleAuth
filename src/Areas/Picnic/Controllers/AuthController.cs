@@ -31,6 +31,7 @@ namespace Picnic.SimpleAuth.Areas.Picnic.Controllers
         [Route("login")]
         public async Task<IActionResult> Login()
         {
+            // Create a default user if no users exist
             var userCount = this.UserService.GetAllItems().Count;
             if (userCount == 0)
             {
