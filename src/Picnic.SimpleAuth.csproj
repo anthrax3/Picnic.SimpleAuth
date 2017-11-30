@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+    <Version>0.9.0.0</Version>
+    <Authors>Matthew Marksbury</Authors>
+    <Company></Company>
+    <PackageProjectUrl>https://github.com/ctorx/Picnic.SimpleAuth</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/ctorx/Picnic.SimpleAuth/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright (c) 2017 Matthew Marksbury</Copyright>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>0.9.0.0</AssemblyVersion>
+    <FileVersion>0.9.0.0</FileVersion>
+    <Description>Picnic.SimpleAuth is a A simple authentication extension for Picnic</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="**\*.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Picnic\src\Picnic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CryptoHelper" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.0.1" />
+  </ItemGroup>
+
+</Project>
