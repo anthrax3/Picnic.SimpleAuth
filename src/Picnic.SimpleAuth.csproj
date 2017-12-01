@@ -23,14 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Picnic\src\Picnic.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CryptoHelper" Version="3.0.0" />
+    <PackageReference Include="ctorx.Core.Mvc.Messaging" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.1" />
+    <PackageReference Include="Picnic" Version="0.9.4" />
   </ItemGroup>
 
 </Project>
