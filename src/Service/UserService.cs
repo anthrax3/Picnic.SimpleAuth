@@ -1,4 +1,5 @@
-﻿using Picnic.Service;
+﻿using Microsoft.AspNetCore.Http;
+using Picnic.Service;
 using Picnic.SimpleAuth.Model;
 using Picnic.Stores;
 
@@ -9,6 +10,6 @@ namespace Picnic.SimpleAuth.Service
         /// <summary>
         /// ctor the Mighty
         /// </summary>
-        public DefaultUserService(IGenericStore<User> store) : base(store) { }
+        public DefaultUserService(IGenericStore<User> store, IHttpContextAccessor httpContextAccessor) : base(store, httpContextAccessor) { }
     }
 }

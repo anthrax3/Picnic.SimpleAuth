@@ -1,0 +1,11 @@
+﻿@using Picnic.SimpleAuth.Areas.Picnic.Controllers;
+
+<ul class="nav navbar-nav">
+	<li class="dropdown">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown" ><span class="glyphicon glyphicon-user"></span> @User.Identity.Name <span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li><a href="@Url.Action(nameof(AuthController.ChangePassword), "Auth")">Change Password</a></li>
+			<li><a href="@Url.Action(nameof(AuthController.Logout), "Auth")">Logout</a></li>
+		</ul>
+	</li>
+</ul>	

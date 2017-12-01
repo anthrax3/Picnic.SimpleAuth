@@ -26,12 +26,7 @@
 					<h3 class="panel-title">Login</h3>
 				</div>
 				<div class="panel-body">
-					@if (Model.IsLoginFailure)
-					{
-						<div class="alert alert-danger" role="alert">
-							 <strong>Sorry!</strong> That username/password didn't work.
-						</div>
-					}
+					@Html.Partial("_MessageList")
 					<form asp-controller="Auth" asp-action="Login">
 						<input type="hidden" asp-for="ReturnUrl" />
 						<div class="form-group">
