@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Picnic.Model;
 using Picnic.Options;
 using Picnic.Service;
+using Picnic.SimpleAuth.Areas.Picnic.Controllers;
 using Picnic.SimpleAuth.Model;
 using Picnic.SimpleAuth.Service;
 using Picnic.Stores;
@@ -27,25 +32,25 @@ namespace Picnic.SimpleAuth.Extensions
         {
             var services = picnicOptionsBuilder.Services;
 
-            var picnicOptions = services.BuildServiceProvider().GetService(typeof(IOptions<PicnicOptions>));
+            var picnicOptionsProvider = (IOptions<PicnicOptions>)services.BuildServiceProvider().GetService(typeof(IOptions<PicnicOptions>));
+            var effectivePicnicOptions = picnicOptionsProvider.Value;
 
             picnicOptionsBuilder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options ?? (opts =>
                 {
                     opts.Cookie.Name = "picnic-auth";
-                    opts.LoginPath = "/picnic/login";
+                    opts.LoginPath = $"/{effectivePicnicOptions.Manage.RoutePrefix}/login";
                 }));
 
-            // Setup Authorization for Picnic
+            // Tie Policy to Role Claim
             picnicOptionsBuilder.Services.AddAuthorization(opts => opts.AddPolicy("PicnicAuthPolicy", policyOptions =>
             {
-                // NOTE: This example allows anonymous access to the Picnic interface
-                // Add your application's policy specifics to control access to the Picnic interface
                 policyOptions.RequireRole("PicnicUser");
                 policyOptions.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
                 policyOptions.Build();
             }));
 
+            // Use Page Store Binding to determine how to bind UserStore
             var pageStoreBinding = picnicOptionsBuilder.Services.FirstOrDefault(x => x.ServiceType == typeof(IGenericStore<Page>));
             if (pageStoreBinding.ImplementationType == typeof(GenericJsonStore<Page>))
             {
@@ -61,6 +66,12 @@ namespace Picnic.SimpleAuth.Extensions
                 picnicOptionsBuilder.Services.AddScoped(typeof(IGenericStore<User>), implementationType);
             }
 
+            // Route Prefix
+            services.Configure<MvcOptions>(opts => opts.Conventions.Insert(0, new PicnicPrefixAppModelConvention(effectivePicnicOptions.Manage.RoutePrefix, typeof(AuthController).Namespace)));
+
+            // View Location Expanders
+            services.Configure<RazorViewEngineOptions>(razorViewEngineOptions => razorViewEngineOptions.FileProviders.Add(new EmbeddedFileProvider(typeof(Picnic.SimpleAuth.Model.User).GetTypeInfo().Assembly)));
+            
             picnicOptionsBuilder.Services.AddScoped<IUserService, DefaultUserService>();
 
             return picnicOptionsBuilder;

@@ -23,12 +23,12 @@ namespace Samples.AspNetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {            
-            services.AddMvc().UsePicnic("cms").UsePicnicSimpleAuth("cms");
+            services.AddMvc();
 
             // Add Picnic, use Json Store
             services.AddPicnic()
-                .UseJsonStore("App_Data\\Picnic")
-                .UseSimpleAuth(options => options.LoginPath = "/cms/login");
+                .UseJsonStore()
+                .UseSimpleAuth(); // <= Just Add UseSimpleAuth() to the AddPicnic service binding and you're all set (with defaults of course)
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
