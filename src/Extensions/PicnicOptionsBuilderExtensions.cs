@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Picnic.Model;
 using Picnic.Options;
 using Picnic.Service;
@@ -24,6 +25,10 @@ namespace Picnic.SimpleAuth.Extensions
         /// <returns>PicnicOptionsBuilder with specified options</returns>
         public static PicnicOptionsBuilder UseSimpleAuth(this PicnicOptionsBuilder picnicOptionsBuilder, Action<CookieAuthenticationOptions> options = null)
         {
+            var services = picnicOptionsBuilder.Services;
+
+            var picnicOptions = services.BuildServiceProvider().GetService(typeof(IOptions<PicnicOptions>));
+
             picnicOptionsBuilder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options ?? (opts =>
                 {
