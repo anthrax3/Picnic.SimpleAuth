@@ -29,7 +29,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.1" />
-    <PackageReference Include="Picnic" Version="0.9.5.2" />
+    <PackageReference Include="Picnic" Version="1.0.0-alpha" />
   </ItemGroup>
 
 </Project>
